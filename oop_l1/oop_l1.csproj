@@ -56,6 +56,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IArchivingPlugin.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="Presenter.cs" />

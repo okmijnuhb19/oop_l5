@@ -67,6 +67,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.savePicture = new System.Windows.Forms.Button();
             this.loadPicture = new System.Windows.Forms.Button();
+            this.addFunctional = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Thickness)).BeginInit();
@@ -482,7 +484,7 @@
             // 
             // pluginButton
             // 
-            this.pluginButton.Location = new System.Drawing.Point(906, 262);
+            this.pluginButton.Location = new System.Drawing.Point(848, 186);
             this.pluginButton.Name = "pluginButton";
             this.pluginButton.Size = new System.Drawing.Size(75, 23);
             this.pluginButton.TabIndex = 19;
@@ -512,11 +514,33 @@
             this.loadPicture.Text = "Load";
             this.loadPicture.UseVisualStyleBackColor = true;
             // 
+            // addFunctional
+            // 
+            this.addFunctional.Location = new System.Drawing.Point(848, 215);
+            this.addFunctional.Name = "addFunctional";
+            this.addFunctional.Size = new System.Drawing.Size(75, 40);
+            this.addFunctional.TabIndex = 22;
+            this.addFunctional.Text = "Add Archive Plugin";
+            this.addFunctional.UseVisualStyleBackColor = true;
+            this.addFunctional.Click += new System.EventHandler(this.addFunctional_Click);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(848, 12);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(75, 23);
+            this.clearButton.TabIndex = 23;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 473);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.addFunctional);
             this.Controls.Add(this.loadPicture);
             this.Controls.Add(this.savePicture);
             this.Controls.Add(this.pluginButton);
@@ -589,6 +613,8 @@
         private System.Windows.Forms.Button savePicture;
         private System.Windows.Forms.Button loadPicture;
         public System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button addFunctional;
+        private System.Windows.Forms.Button clearButton;
 
     }
 }

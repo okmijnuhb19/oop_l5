@@ -17,13 +17,14 @@ namespace EllipsePlugin
         }
         public override void Draw()
         {
-            Graphics g = v.PBox.CreateGraphics();
+            Graphics g = Graphics.FromImage(v.IMG);
             g.DrawEllipse(new Pen(v.selectedColorBack, v.ThicknessValue), pointArray[0].X, pointArray[0].Y, pointArray[1].X - pointArray[0].X, pointArray[1].Y - pointArray[0].Y);
             Brush solidBrush = new SolidBrush(v.selectedColorBack);
             if (isFlooded == true)
             {
                 g.FillEllipse(solidBrush, pointArray[0].X, pointArray[0].Y, pointArray[1].X - pointArray[0].X, pointArray[1].Y - pointArray[0].Y);
             }
+            v.PBox.Image = v.IMG;
         }
     }
 }

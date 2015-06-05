@@ -1,0 +1,7 @@
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release\ArchivingPlugin.dll
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release\ArchivingPlugin.pdb
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release\oop_l1.exe
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release\oop_l1.pdb
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\obj\Release\ArchivingPlugin.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\obj\Release\ArchivingPlugin.dll
+C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\obj\Release\ArchivingPlugin.pdb

@@ -24,10 +24,13 @@ namespace oop_l1
         event EventHandler CheckBoxClick;
         event EventHandler PluginButtonClick;
         event EventHandler SaveClick;
+        event EventHandler ArchiveClick;
         event EventHandler LoadClick;
+        event EventHandler ClearClick;
         OpenFileDialog openfiledialod { get; set; }
         int NumberOfLinks { get; }
         bool CheckBox { get; }
+        bool WhatSerialization { get; set; }
         Image IMG { get; set; }
         Point FormPosition { get; }
         Point PBoxPosition { get; }
@@ -277,9 +280,12 @@ namespace oop_l1
         public int NumberOfLinks { get { return Convert.ToInt32(numberOfLinks.Value); } }
         public OpenFileDialog openfiledialod { get { return openFileDialog1; } set { openFileDialog1 = value; } }
         public Image IMG { get { return img; } set { img=value;} }
+        public bool WhatSerialization { get; set; }
         public event EventHandler polygonLineClick;
         public event EventHandler polygonClick;
         public event EventHandler lineClick;
+        public event EventHandler ClearClick;
+        public event EventHandler ArchiveClick;
         public event EventHandler triangleClick;
         public event EventHandler rectangleClick;
         public event EventHandler quadrangleClick;
@@ -301,6 +307,16 @@ namespace oop_l1
         {
             elips.Show();
             if (PluginButtonClick != null) PluginButtonClick(this, EventArgs.Empty);
+        }
+
+        private void addFunctional_Click(object sender, EventArgs e)
+        {
+            if (ArchiveClick != null) ArchiveClick(this, EventArgs.Empty);
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            if (ClearClick != null) ClearClick(this, EventArgs.Empty);
         }
 
         

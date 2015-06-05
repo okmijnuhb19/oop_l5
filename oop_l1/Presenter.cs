@@ -21,11 +21,14 @@ namespace oop_l1
         private bool isFlooded;
         public Section shape;
         public IPlugin plug;
+        IArchivingPlugin aPlugin;
+        bool b=false;
         public Presenter(IForm view) 
         {
             
             _view = view;
             vw = _view;
+            b = false;
             currentPoint = 0;
             pointArray = new Point[2];
             pointValue = 2;
@@ -42,25 +45,69 @@ namespace oop_l1
             _view.PluginButtonClick += _view_PluginButtonClick;
             _view.LoadClick += _view_LoadClick;
             _view.SaveClick += _view_SaveClick;
+            _view.ArchiveClick += _view_ArchiveClick;
+            _view.ClearClick += _view_ClearClick;
+        }
+
+        void _view_ArchiveClick(object sender, EventArgs e)
+        {
+            _view.openfiledialod.Filter =
+                "plugins (*.DLL)|*.DLL";
+            _view.openfiledialod.Title = "Dll Browser";
+            _view.openfiledialod.InitialDirectory = @"C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release";
+            DialogResult dr = _view.openfiledialod.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                String dllPath = _view.openfiledialod.FileName;
+
+                var pluginAssembly = Assembly.LoadFrom(dllPath);
+                foreach (Type type in pluginAssembly.GetExportedTypes())
+                {
+                    if (type.GetInterfaces().Contains(typeof(IArchivingPlugin)))
+                    {
+                        var plugin = (IArchivingPlugin)type.GetConstructor(Type.EmptyTypes).Invoke(new Object[0]);
+                        aPlugin = plugin;
+                        b = true;
+                    }
+                }
+            }
         }
 
         void _view_SaveClick(object sender, EventArgs e)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            // получаем поток, куда будем записывать сериализованный объект
-            string path=@"F:\Учеба\repository\Pictures\"+DateTime.Now.Month.ToString()+"_"+DateTime.Now.Day.ToString()+"_"
-                +DateTime.Now.Hour.ToString()+"_"+DateTime.Now.Minute.ToString()+"_"+DateTime.Now.Second.ToString()+".dat";
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            if (b == true)
             {
-                formatter.Serialize(fs,_view.IMG);
-                _view.IMG = new Bitmap(830,414);
-                _view.PBox.Image = _view.IMG;
-                MessageBox.Show("Изображение сериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                aPlugin.DeflateSerialization(_view);
             }
-            
+            else UsualSerialization();       
         }
 
         void _view_LoadClick(object sender, EventArgs e)
+        {
+            if (b == true) 
+            {
+                aPlugin.DeflateDeserialization(_view);                
+            }
+            else UsualDeserialization();
+        }
+
+
+        void UsualSerialization()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            // получаем поток, куда будем записывать сериализованный объект
+            string path = @"F:\Учеба\repository\Pictures\" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_"
+                + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString() + ".dat";
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, _view.IMG);
+                _view.IMG = new Bitmap(830, 414);
+                _view.PBox.Image = _view.IMG;
+                MessageBox.Show("Изображение сериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        void UsualDeserialization() 
         {
             BinaryFormatter formatter = new BinaryFormatter();
             _view.openfiledialod.Filter =
@@ -70,17 +117,16 @@ namespace oop_l1
             _view.openfiledialod.InitialDirectory = @"F:\Учеба\repository\Pictures\";
             DialogResult dr = _view.openfiledialod.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.OK)
-            {
+            {                                                      
                 using (FileStream fs = new FileStream(_view.openfiledialod.FileName, FileMode.OpenOrCreate))
                 {
-                    
-                    _view.IMG =  (Image)formatter.Deserialize(fs);
-                    _view.PBox.Image = _view.IMG; 
+
+                    _view.IMG = (Image)formatter.Deserialize(fs);
+                    _view.PBox.Image = _view.IMG;
                     MessageBox.Show("Изображение десериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
-
         void _view_PluginButtonClick(object sender, EventArgs e)
         {
             _view.openfiledialod.Filter =
@@ -194,7 +240,8 @@ namespace oop_l1
        
         void _view_ClearClick(object sender, EventArgs e)
         {
-            _view.PBox.Image = null;
+            _view.IMG = new Bitmap(830, 414);
+            _view.PBox.Image = new Bitmap(830,414);
         }
         #endregion
     }
