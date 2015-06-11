@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllipsePlugin", "EllipsePlu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchivingPlugin", "ArchivingPlugin\ArchivingPlugin.csproj", "{AE2C0AFC-CF9E-4AA2-9170-D4C304564960}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashCounter", "..\..\..\..\Desktop\3456\OOP_laba3\HashCounter\HashCounter.csproj", "{0D78C468-835F-4204-AE1F-8DD0BFD2C6C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{AE2C0AFC-CF9E-4AA2-9170-D4C304564960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE2C0AFC-CF9E-4AA2-9170-D4C304564960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE2C0AFC-CF9E-4AA2-9170-D4C304564960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D78C468-835F-4204-AE1F-8DD0BFD2C6C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D78C468-835F-4204-AE1F-8DD0BFD2C6C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D78C468-835F-4204-AE1F-8DD0BFD2C6C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D78C468-835F-4204-AE1F-8DD0BFD2C6C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="IArchivingPlugin.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="ISerializer.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="Presenter.cs" />
     <Compile Include="Program.cs" />

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace oop_l1
 {
-    public interface IArchivingPlugin
+    public interface ISerializer<T>
     {
-        void Save(IForm _view);
-        void Load(IForm _view);
+        MemoryStream Serialize(List<T> items);
+
+        List<T> Deserialize(string path);
     }
 }

@@ -49,49 +49,9 @@ namespace oop_l1
             _view.ClearClick += _view_ClearClick;
         }
 
-        void _view_ArchiveClick(object sender, EventArgs e)
-        {
-            _view.openfiledialod.Filter =
-                "plugins (*.DLL)|*.DLL";
-            _view.openfiledialod.Title = "Dll Browser";
-            _view.openfiledialod.InitialDirectory = @"C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release";
-            DialogResult dr = _view.openfiledialod.ShowDialog();
-            if (dr == System.Windows.Forms.DialogResult.OK)
-            {
-                String dllPath = _view.openfiledialod.FileName;
-
-                var pluginAssembly = Assembly.LoadFrom(dllPath);
-                foreach (Type type in pluginAssembly.GetExportedTypes())
-                {
-                    if (type.GetInterfaces().Contains(typeof(IArchivingPlugin)))
-                    {
-                        var plugin = (IArchivingPlugin)type.GetConstructor(Type.EmptyTypes).Invoke(new Object[0]);
-                        aPlugin = plugin;
-                        b = true;
-                    }
-                }
-            }
-        }
-
-        void _view_SaveClick(object sender, EventArgs e)
-        {
-            if (b == true)
-            {
-                aPlugin.DeflateSerialization(_view);
-            }
-            else UsualSerialization();       
-        }
-
-        void _view_LoadClick(object sender, EventArgs e)
-        {
-            if (b == true) 
-            {
-                aPlugin.DeflateDeserialization(_view);                
-            }
-            else UsualDeserialization();
-        }
 
 
+        
         void UsualSerialization()
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -127,6 +87,9 @@ namespace oop_l1
                 }
             }
         }
+
+
+        #region Обработка Событий
         void _view_PluginButtonClick(object sender, EventArgs e)
         {
             _view.openfiledialod.Filter =
@@ -186,6 +149,45 @@ namespace oop_l1
             isFlooded = _view.CheckBox;
             shape = new Rectangle();
         }
+        void _view_ArchiveClick(object sender, EventArgs e)
+        {
+            _view.openfiledialod.Filter =
+                "plugins (*.DLL)|*.DLL";
+            _view.openfiledialod.Title = "Dll Browser";
+            _view.openfiledialod.InitialDirectory = @"C:\Users\Andrew\Documents\Visual Studio 2012\Projects\oop_l1\ArchivingPlugin\bin\Release";
+            DialogResult dr = _view.openfiledialod.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                String dllPath = _view.openfiledialod.FileName;
+
+                var pluginAssembly = Assembly.LoadFrom(dllPath);
+                foreach (Type type in pluginAssembly.GetExportedTypes())
+                {
+                    if (type.GetInterfaces().Contains(typeof(IArchivingPlugin)))
+                    {
+                        var plugin = (IArchivingPlugin)type.GetConstructor(Type.EmptyTypes).Invoke(new Object[0]);
+                        aPlugin = plugin;
+                        b = true;
+                    }
+                }
+            }
+        }
+        void _view_SaveClick(object sender, EventArgs e)
+        {
+            if (b == true)
+            {
+                aPlugin.Save(_view);
+            }
+            else UsualSerialization();
+        }
+        void _view_LoadClick(object sender, EventArgs e)
+        {
+            if (b == true)
+            {
+                aPlugin.Load(_view);
+            }
+            else UsualDeserialization();
+        }
         void _view_triangleClick(object sender, EventArgs e)
         {
             pointValue = 3;
@@ -219,7 +221,6 @@ namespace oop_l1
             shape = new PoligonalLine();
         }
 
-        #region Обработка Событий
         void _view_PBoxClick(object sender, EventArgs e)
         {
             _view.PBox.Cursor=new Cursor(Cursor.Current.Handle);

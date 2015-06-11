@@ -15,25 +15,8 @@ namespace ArchivingPlugin
 {
     public class ArchivingPlugin : IArchivingPlugin
     {
-        public void DeflateSerialization(IForm _view)
+        public void Save(IForm _view)
         {
-            #region a1
-            /*BinaryFormatter formatter = new BinaryFormatter();
-            // получаем поток, куда будем записывать сериализованный объект
-            string path = @"F:\Учеба\repository\Pictures\" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_"
-                + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString() + ".bin";
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                    using (DeflateStream compressionStream = new DeflateStream(fs, CompressionMode.Compress))
-                    {
-                        fs.CopyTo(compressionStream);
-                        formatter.Serialize(compressionStream, _view.IMG);
-                        _view.IMG = new Bitmap(830, 414);
-                        _view.PBox.Image = _view.IMG;
-                        MessageBox.Show("Изображение сжато и сериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-            }*/
-            #endregion
             string path = @"F:\Учеба\repository\Pictures\" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_"
                 + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString() + ".bin";
             using (Stream s = new FileStream(path, FileMode.Create))
@@ -55,7 +38,7 @@ namespace ArchivingPlugin
 
         }
 
-        public void DeflateDeserialization(IForm _view)
+        public void Load(IForm _view)
         {
 #region a
             /*BinaryFormatter formatter = new BinaryFormatter();
