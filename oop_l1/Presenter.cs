@@ -21,6 +21,7 @@ namespace oop_l1
         private bool isFlooded;
         public Section shape;
         public IPlugin plug;
+        public IHashPlugin hPlug;
         IArchivingPlugin aPlugin;
         bool b=false;
         public Presenter(IForm view) 
@@ -33,6 +34,7 @@ namespace oop_l1
             pointArray = new Point[2];
             pointValue = 2;
             shape = new Section();
+            hashPlugin();
             _view.PBoxClick += _view_PBoxClick;
             _view.polygonLineClick += _view_polygonLineClick;
             _view.polygonClick += _view_polygonClick;
@@ -49,7 +51,10 @@ namespace oop_l1
             _view.ClearClick += _view_ClearClick;
         }
 
-
+        void hashPlugin() 
+        {
+            hPlug=HashAdapter.Addplugin();
+        }
 
         
         void UsualSerialization()
@@ -60,7 +65,12 @@ namespace oop_l1
                 + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString() + ".dat";
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
+                MemoryStream ms = new MemoryStream();
                 formatter.Serialize(fs, _view.IMG);
+                fs.Position = 0;
+                fs.CopyTo(ms);
+                byte[] arr = ms.ToArray();
+                HashAdapter.PutHash(arr);
                 _view.IMG = new Bitmap(830, 414);
                 _view.PBox.Image = _view.IMG;
                 MessageBox.Show("Изображение сериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -77,14 +87,19 @@ namespace oop_l1
             _view.openfiledialod.InitialDirectory = @"F:\Учеба\repository\Pictures\";
             DialogResult dr = _view.openfiledialod.ShowDialog();
             if (dr == System.Windows.Forms.DialogResult.OK)
-            {                                                      
-                using (FileStream fs = new FileStream(_view.openfiledialod.FileName, FileMode.OpenOrCreate))
+            {
+                byte[] data = File.ReadAllBytes(_view.openfiledialod.FileName);
+                if (HashAdapter.GetHash(data))
                 {
+                    using (FileStream fs = new FileStream(_view.openfiledialod.FileName, FileMode.OpenOrCreate))
+                    {
 
-                    _view.IMG = (Image)formatter.Deserialize(fs);
-                    _view.PBox.Image = _view.IMG;
-                    MessageBox.Show("Изображение десериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _view.IMG = (Image)formatter.Deserialize(fs);
+                        _view.PBox.Image = _view.IMG;
+                        MessageBox.Show("Изображение десериализовано!", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
+                else MessageBox.Show("Хэш не совпал", "Сообщение!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
